@@ -16,11 +16,30 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
+    - name: Action Path
+      run: echo $ACTION_PATH
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      shell: bash
+
+    - name: Action Repository
+      run: echo $ACTION_REPOSITORY
+      env:
+        ACTION_PATH: ${{ github.action_repository }}
+      shell: bash
+
+    - name: Action Ref
+      run: echo $ACTION_REF
+      env:
+        ACTION_PATH: ${{ github.action_ref }}
+      shell: bash
+
+    - name: Checkout Action Repository
+      uses: actions/checkout@v4
       with:
-        repository: 'sonderformat-llc/c111-run-quickstart-e2e-test'
+        repository: '${{ github.action_repository }}'
         path: 'faQuickstartE2ETest'
-        ref: 'v0.1.8'
+        ref: '${{ github.action_ref }}'
 
     - uses: actions/setup-node@v4
       with:
