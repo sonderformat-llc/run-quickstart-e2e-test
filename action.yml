@@ -20,6 +20,7 @@ runs:
         repository: 'sonderformat-llc/c111-run-quickstart-e2e-test'
         path: 'faQuickstartE2ETest'
         token: ${{ inputs.GH_SECRET }}
+        ref: 'v0.1.6'
 
     - uses: actions/setup-node@v4
       with:
