@@ -1,7 +1,7 @@
 name: 'Quickstart Playwright End to End Tests'
 description: 'Standardized Playwright end to end test for all FusionAuth Quickstart applications.'
 inputs:
-  FUSIONAUTH_ADMIN_URL:
+  FUSIONAUTH_URL:
     description: 'The FusionAuth URL.'
     required: false
     default: 'http://localhost:9011'
@@ -39,7 +39,7 @@ runs:
     - name: Check FusionAuth status
       run: |
         for i in {1..5}; do
-          if curl -s ${{ inputs.FUSIONAUTH_ADMIN_URL }}/api/status | grep -qi "ok"; then
+          if curl -s ${{ inputs.FUSIONAUTH_URL }}/api/status | grep -qi "ok"; then
             echo "FusionAuth is up and running."
             exit 0
           else
@@ -83,7 +83,7 @@ runs:
     - name: Run Playwright tests
       run: npx playwright test
       env:
-        FUSIONAUTH_ADMIN_URL: ${{ inputs.FUSIONAUTH_ADMIN_URL }}/admin/
+        FUSIONAUTH_URL: ${{ inputs.FUSIONAUTH_URL }}/admin/
         QUICKSTART_URL: ${{ inputs.QUICKSTART_URL }}
       shell: bash
       working-directory: ${{ github.action_path }}
