@@ -1,14 +1,18 @@
 name: 'Quickstart Playwright End to End Tests'
 description: 'Standardized Playwright end to end test for all FusionAuth Quickstart applications.'
 inputs:
-  FUSIONAUTH_ADMIN_URL:  # id of input
+  FUSIONAUTH_ADMIN_URL:
     description: 'The URL of the FusionAuth admin interface.'
     required: false
     default: 'http://localhost:9011/admin'
-  QUICKSTART_URL:  # id of input
+  QUICKSTART_URL:
     description: 'The URL of the Quickstart application.'
     required: false
     default: 'http://localhost:3000'
+  ARTIFACT_PREFIX:
+    description: 'The prefix for the generated playwright artifact. Especially useful for matrix workflows.'
+    required: false
+    default: 'playwright'
 runs:
   using: "composite"
   steps:
@@ -44,6 +48,6 @@ runs:
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report-${{github.run_number}}-${{github.job}}
+        name: ${{ inputs.ARTIFACT_PREFIX }}-report-${{github.run_number}}-${{github.run_attempt}}
         path: ./faQuickstartE2ETest/playwright-report/
         retention-days: 30
