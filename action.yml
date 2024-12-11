@@ -34,13 +34,6 @@ runs:
         ACTION_PATH: ${{ github.action_ref }}
       shell: bash
 
-    - name: Checkout Action Repository
-      uses: actions/checkout@v4
-      with:
-        repository: '${{ github.action_repository }}'
-        path: 'faQuickstartE2ETest'
-        ref: '${{ github.action_ref }}'
-
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
@@ -48,12 +41,12 @@ runs:
     - name: Install dependencies
       run: npm ci
       shell: bash
-      working-directory: faQuickstartE2ETest
+      working-directory: ${{ github.action_path }}
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
       shell: bash
-      working-directory: faQuickstartE2ETest
+      working-directory: ${{ github.action_path }}
 
     - name: Run Playwright tests
       run: npx playwright test
@@ -61,12 +54,12 @@ runs:
         FUSIONAUTH_ADMIN_URL: ${{ inputs.FUSIONAUTH_ADMIN_URL }}
         QUICKSTART_URL: ${{ inputs.QUICKSTART_URL }}
       shell: bash
-      working-directory: faQuickstartE2ETest
+      working-directory: ${{ github.action_path }}
 
     - name: Upload Playwright results
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.ARTIFACT_PREFIX }}-report-${{github.run_number}}-${{github.run_attempt}}
-        path: ./faQuickstartE2ETest/playwright-report/
+        path: ${{ github.action_path }}/playwright-report/
         retention-days: 30
