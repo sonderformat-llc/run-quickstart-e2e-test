@@ -16,17 +16,33 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup LTS Node
-      uses: actions/setup-node@v4
+    - uses: actions/checkout@v4
+      with:
+        repository: 'sonderformat-llc/c111-run-quickstart-e2e-test'
+        path: 'faQuickstartE2ETest'
+        ref: 'v0.1.8'
+
+    - uses: actions/setup-node@v4
       with:
         node-version: lts/*
 
-    - name: Run Playwright
-      run: run-playwright.sh
+    - name: Install dependencies
+      run: npm ci
+      shell: bash
+      working-directory: faQuickstartE2ETest
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+      shell: bash
+      working-directory: faQuickstartE2ETest
+
+    - name: Run Playwright tests
+      run: npx playwright test
       env:
         FUSIONAUTH_ADMIN_URL: ${{ inputs.FUSIONAUTH_ADMIN_URL }}
         QUICKSTART_URL: ${{ inputs.QUICKSTART_URL }}
       shell: bash
+      working-directory: faQuickstartE2ETest
 
     - name: Upload Playwright results
       uses: actions/upload-artifact@v4
