@@ -9,9 +9,6 @@ inputs:
     description: 'The URL of the Quickstart application.'
     required: false
     default: 'http://localhost:3000'
-  GH_SECRET:  # id of input
-    description: 'The secret to access the Github API.'
-    required: true
 runs:
   using: "composite"
   steps:
@@ -19,8 +16,6 @@ runs:
       with:
         repository: 'sonderformat-llc/c111-run-quickstart-e2e-test'
         path: 'faQuickstartE2ETest'
-        token: ${{ inputs.GH_SECRET }}
-        ref: 'v0.1.6'
 
     - uses: actions/setup-node@v4
       with:
