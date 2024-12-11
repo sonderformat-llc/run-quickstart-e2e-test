@@ -2,9 +2,9 @@ name: 'Quickstart Playwright End to End Tests'
 description: 'Standardized Playwright end to end test for all FusionAuth Quickstart applications.'
 inputs:
   FUSIONAUTH_ADMIN_URL:
-    description: 'The URL of the FusionAuth admin interface.'
+    description: 'The FusionAuth URL.'
     required: false
-    default: 'http://localhost:9011/admin'
+    default: 'http://localhost:9011'
   QUICKSTART_URL:
     description: 'The URL of the Quickstart application.'
     required: false
@@ -34,6 +34,38 @@ runs:
         ACTION_PATH: ${{ github.action_ref }}
       shell: bash
 
+    # Check FusionAuth status 5 times with increasing wait times.
+    # Continue if FusionAuth status is OK or fail at the end.
+    - name: Check FusionAuth status
+      run: |
+        for i in {1..5}; do
+          if curl -s ${{ inputs.FUSIONAUTH_ADMIN_URL }}/api/status | grep -qi "ok"; then
+            echo "FusionAuth is up and running."
+            exit 0
+          else
+            echo "FusionAuth is not up and running. Waiting for $(expr 5 \* $i) seconds."
+            sleep $(expr 5 \* $i)
+          fi
+        done
+        exit 1
+      shell: bash
+
+    # Check Quickstart status 5 times with increasing wait times.
+    # Continue if Quickstart is Reachable or fail at the end.
+    - name: Check Quickstart status
+      run: |
+        for i in {1..5}; do
+          if curl --write-out %{http_code} --silent --output /dev/null ${{ inputs.QUICKSTART_URL }} | grep -qi "200"; then
+            echo "Quickstart is up and running."
+            exit 0
+          else
+            echo "Quickstart is not up and running. Waiting for $(expr 5 \* $i) seconds."
+            sleep $(expr 5 \* $i)
+          fi
+        done
+        exit 1
+      shell: bash
+
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
@@ -51,7 +83,7 @@ runs:
     - name: Run Playwright tests
       run: npx playwright test
       env:
-        FUSIONAUTH_ADMIN_URL: ${{ inputs.FUSIONAUTH_ADMIN_URL }}
+        FUSIONAUTH_ADMIN_URL: ${{ inputs.FUSIONAUTH_ADMIN_URL }}/admin/
         QUICKSTART_URL: ${{ inputs.QUICKSTART_URL }}
       shell: bash
       working-directory: ${{ github.action_path }}
