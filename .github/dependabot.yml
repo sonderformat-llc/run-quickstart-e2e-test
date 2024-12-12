@@ -15,12 +15,6 @@ updates:
       dev-github-actions:
         dependency-type: "development"
 
-  # Maintain dependencies for Docker
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "daily"
-
   # Maintain dependencies for npm in playwright
   - package-ecosystem: "npm"
     directory: "/"
