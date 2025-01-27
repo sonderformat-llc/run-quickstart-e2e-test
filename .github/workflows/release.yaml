@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+    contents: write
+    pull-requests: write
+    repository-projects: read
+    # only required for workflows in private repositories
+    actions: read
+
+concurrency:
+  group: release
+
+jobs:
+  prerelease-prep:
+    name: Create Prerelease Pull Request
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - id: release
+        name: Run prerelease release-please
+        uses: googleapis/release-please-action@v4
+        with:
+          config-file: ".github/prerelease-config.json"
+          manifest-file: ".github/prerelease-manifest.json"
+
+  prerelease-test:
+    name: Run Prerelease Tests
+    runs-on: ubuntu-latest
+    if: ${{ needs.prerelease-prep.outputs.releases_created == 'false' }}
+    needs: prerelease-prep
+    steps:
+      - name: End To End Test
+        run: |
+          echo "Running end to end tests for prerelease!"
+
+  prerelease:
+    name: Create Prerelease and Release Pull Request
+    runs-on: ubuntu-latest
+    if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
+    needs: prerelease-prep
+    steps:
+      - name: Pre Release Step
+        run: |
+          echo "Running pre-release step!"
+
+      - name: Run release release-please
+        uses: googleapis/release-please-action@v4
+        with:
+          config-file: ".github/release-config.json"
+          manifest-file: ".github/release-manifest.json"
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    if: ${{ needs.prerelease-prep.outputs.releases_created == 'true' && !contains(needs.prerelease-prep.outputs.tag_name, 'rc') }}
+    needs: prerelease-prep
+    steps:
+      - name: Release Step
+        run: |
+          echo "Running release step!"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync prerelease manifest
+        env:
+          MANIFEST_PATH: .github/prerelease-manifest.json
+          RELEASE_TAG: ${{ needs.prerelease-prep.outputs.tag_name }}
+        run: |
+          jq --arg tag "${RELEASE_TAG//v/}" '.["."] = $tag' $MANIFEST_PATH > temp.json \
+            && mv temp.json $MANIFEST_PATH
+
+      - name: Commit change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . $MANIFEST_PATH
+          git commit -m "chore: sync release manifests"
+          git push
+
+  post-release:
+    name: Run Release Build Push Deploy
+    needs: release
+    steps:
+      - name: Post Release Step
+        run: |
+          echo "Running post release step!"
