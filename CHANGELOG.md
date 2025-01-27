@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.0...v0.2.1) (2025-01-27)
+
+
+### Bug Fixes
+
+* **release:** correct job names ([a3f1915](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/a3f1915efea2870a0c553cf4ffd526b3c04aaaa0))
+
 ## [0.2.1-rc](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.0...v0.2.1-rc) (2025-01-27)
 
 
