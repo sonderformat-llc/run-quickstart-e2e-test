@@ -23,6 +23,15 @@ jobs:
       releases_created: ${{ steps.release.outputs.releases_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
+      - name: Add labels to the repository if not present
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create "autorelease: pending" -c FBCA04 -d "release-please PR tagging - Pending release" || true
+          gh label create "autorelease: tagged" -c D4C5F9 -d "release-please PR tagging - Ready for release" || true
+          gh label create "autorelease: snapshot" -c D4C5F9 -d "release-please PR tagging - Ready for release" || true
+          gh label create "autorelease: published" -c 0E8A16 -d "release-please PR tagging - Released" || true
+
       - id: release
         name: Run prerelease release-please
         uses: googleapis/release-please-action@v4
