@@ -16,13 +16,13 @@ concurrency:
   group: release
 
 jobs:
-  prerelease-prep:
+  label-check:
     name: Create Prerelease Pull Request
     runs-on: ubuntu-latest
-    outputs:
-      releases_created: ${{ steps.release.outputs.releases_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Add labels to the repository if not present
         env:
           GH_TOKEN: ${{ github.token }}
@@ -32,6 +32,14 @@ jobs:
           gh label create "autorelease: snapshot" -c D4C5F9 -d "release-please PR tagging - Ready for release" || true
           gh label create "autorelease: published" -c 0E8A16 -d "release-please PR tagging - Released" || true
 
+  prerelease-prep:
+    name: Create Prerelease Pull Request
+    depends-on: label-check
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
       - id: release
         name: Run prerelease release-please
         uses: googleapis/release-please-action@v4
