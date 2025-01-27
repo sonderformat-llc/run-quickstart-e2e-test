@@ -34,7 +34,7 @@ jobs:
 
   prerelease-prep:
     name: Create Prerelease Pull Request
-    depends-on: label-check
+    needs: label-check
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
