@@ -96,6 +96,7 @@ jobs:
 
   post-release:
     name: Run Release Build Push Deploy
+    runs-on: ubuntu-latest
     needs: release
     steps:
       - name: Post Release Step
