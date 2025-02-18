@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.1...v0.2.2) (2025-02-18)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump @types/node ([#12](https://github.com/sonderformat-llc/run-quickstart-e2e-test/issues/12)) ([ae5747c](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/ae5747cb08aa138ffbfa4e3b84a77a103fd48171))
+
 ## [0.2.2-rc](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.1...v0.2.2-rc) (2025-02-18)
 
 
