@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3-rc](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.2...v0.2.3-rc) (2025-02-24)
+
+
+### Bug Fixes
+
+* initial docs draft ([1be9e54](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/1be9e541efa6417a8f4519aeed70f69a435c6889))
+
 ## [0.2.2](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.1...v0.2.2) (2025-02-18)
 
 
