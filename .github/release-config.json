@@ -3,6 +3,13 @@
   "include-component-in-tag": false,
   "packages": {
     ".": {
+      "extra-files": [
+        {
+          "type": "json",
+          "path": ".github/prerelease-manifest.json",
+          "jsonpath": "$[\".\"]"
+        }
+      ]
     }
   }
 }
