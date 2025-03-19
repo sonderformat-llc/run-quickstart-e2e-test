@@ -76,7 +76,7 @@ jobs:
           node-version: lts/*
 
       - name: Start FusionAuth
-        uses: fusionauth/fusionauth-github-action@v1.0.4
+        uses: fusionauth/fusionauth-github-action@v1
         with:
           FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: kickstart
 
