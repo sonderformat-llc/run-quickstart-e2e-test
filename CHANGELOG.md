@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.2...v0.2.3) (2025-03-19)
+
+
+### Bug Fixes
+
+* initial docs draft ([1be9e54](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/1be9e541efa6417a8f4519aeed70f69a435c6889))
+* **release:** simplify manifest sync ([c2a2e62](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/c2a2e62ed8db6eb4cbf49a8abfc3b2fcb0f8f139))
+
 ## [0.2.3-rc](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.2...v0.2.3-rc) (2025-03-19)
 
 
