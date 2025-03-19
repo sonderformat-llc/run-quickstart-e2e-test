@@ -67,13 +67,16 @@ jobs:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v4.3.0
         with:
           node-version: lts/*
 
       - name: Start FusionAuth
-        uses: fusionauth/fusionauth-github-action@v1
+        uses: fusionauth/fusionauth-github-action@v1.0.4
         with:
           FUSIONAUTH_APP_KICKSTART_DIRECTORY_PATH: kickstart
 
