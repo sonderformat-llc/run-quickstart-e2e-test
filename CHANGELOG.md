@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.4](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.3...v0.2.4) (2025-03-26)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the dev-minor-npm-dependencies group with 2 updates ([#20](https://github.com/sonderformat-llc/run-quickstart-e2e-test/issues/20)) ([0d5f677](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/0d5f6778a699c30284a1c45949acdbb4b8e75a3c))
+* **deps:** bump actions/upload-artifact ([#21](https://github.com/sonderformat-llc/run-quickstart-e2e-test/issues/21)) ([4519521](https://github.com/sonderformat-llc/run-quickstart-e2e-test/commit/4519521cfd58b4bcd4f37b8bca2c72df62f6d48d))
+
 ## [0.2.4-rc](https://github.com/sonderformat-llc/run-quickstart-e2e-test/compare/v0.2.3...v0.2.4-rc) (2025-03-26)
 
 

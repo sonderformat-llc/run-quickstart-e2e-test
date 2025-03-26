@@ -4,5 +4,5 @@
     "@types/node": "^22.13.11"
   },
   "scripts": {},
-  "version": "0.2.4-rc"
+  "version": "0.2.4"
 }
