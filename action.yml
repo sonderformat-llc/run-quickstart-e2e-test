@@ -90,7 +90,7 @@ runs:
       working-directory: ${{ github.action_path }}
 
     - name: Upload Playwright results
-      uses: actions/upload-artifact@v5.0.0
+      uses: actions/upload-artifact@v6.0.0
       if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.ARTIFACT_PREFIX }}-report-${{github.run_number}}-${{github.run_attempt}}
